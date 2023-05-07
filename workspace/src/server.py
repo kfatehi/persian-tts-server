@@ -9,7 +9,7 @@ app = Flask(__name__)
 model_path = "/kaggle/working/best_model_30824.pth"
 config_path = "/kaggle/working/config.json"
 
-synthesizer = Synthesizer(model_path, config_path)
+synthesizer = Synthesizer(model_path, config_path, use_cuda=True)
 
 @app.route('/synthesize', methods=['POST'])
 def synthesize():
