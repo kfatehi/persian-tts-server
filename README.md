@@ -22,9 +22,9 @@ Coqui TTS does not require using the GPU but I have made the assumption that we'
 ## Get the model
 
 
-```
-mkdir -p trained
-pushd trained
+```bash
+mkdir -p pretrained_models
+pushd pretrained_models
 GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/Kamtera/persian-tts-female-vits
 pushd persian-tts-female-vits
 git lfs pull
@@ -34,7 +34,7 @@ popd
 
 ## Build and run the server
 
-```
+```bash
 docker build -t persian-tts .
 docker run --rm --gpus all -v $PWD/pretrained_models/persian-tts-female-vits:/kaggle/working -p 5000:5000 -it persian-tts
 ```
