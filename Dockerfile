@@ -24,8 +24,7 @@ RUN pip3 install torch torchvision torchaudio --extra-index-url https://download
 
 RUN mkdir $HOME/app
 WORKDIR $HOME/app
-ADD requirements.txt requirements.txt
-RUN python3 -m pip install -r ./requirements.txt
+RUN python3 -m pip install TTS
 USER root
 RUN apt update
 RUN apt install -y espeak-ng

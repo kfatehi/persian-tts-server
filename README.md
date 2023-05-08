@@ -1,23 +1,40 @@
 # persian-tts-server
 
-Every so often I check this scene, here we go...
+Every so often I look for Persian TTS software.
 
-this is an abandoned-looking project https://github.com/shenasa-ai/persian-tts
+This year was a huge success.
 
-but this looks lively https://github.com/karim23657/Persian-tts-coqui
+First I found https://github.com/shenasa-ai/persian-tts but I did not see any pretrained models.
 
-Indeed Karim's project sounds quite good having tested his pre-trained model `persian-tts-female-vits` I've elected to wrap it in a server.
+Then I (re-found) https://github.com/karim23657/Persian-tts-coqui which has pretrained models!
 
-This server can then be used from platforms like read-aloud (albeit I am hacking my riva_tts_proxy project to utilize it, speaking of, I need to push this branch, it's just now become a misnomer project given this is obviously not Riva.)
+Indeed Karim's models sound quite good! Specifically I enjoy using `persian-tts-female-vits` and this repo contains the scripts to use it.
 
-Anyway the files in this repo allowed me to setup and use this project.
+This server is designed to be used by https://github.com/kfatehi/riva_tts_proxy/tree/sapi5_and_coqui which is designed to be used from the [Read Aloud browser extension](https://github.com/ken107/read-aloud) thus providing a high-quality, offline, easy-to-use Persian TTS solution!
 
-# Getting the model
+## Prequisites
+
+* Docker
+* Nvidia GPU
+
+Coqui TTS does not require using the GPU but I have made the assumption that we'll be using Nvidia GPUs through Docker.
+
+## Get the model
+
 
 ```
+mkdir -p trained
+pushd trained
 GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/Kamtera/persian-tts-female-vits
-cd persian-tts-female-vits
+pushd persian-tts-female-vits
 git lfs pull
+popd
+popd
 ```
 
-After that you can just run ./server.sh
+## Build and run the server
+
+```
+docker build -t persian-tts .
+docker run --rm --gpus all -v $PWD/pretrained_models/persian-tts-female-vits:/kaggle/working -p 5000:5000 -it persian-tts
+```
