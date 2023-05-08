@@ -38,3 +38,14 @@ popd
 docker build -t persian-tts .
 docker run --rm --gpus all -v $PWD/pretrained_models/persian-tts-female-vits:/kaggle/working -p 5000:5000 -it persian-tts
 ```
+
+## Customize and run forever
+
+Here is how I use it:
+- daemonized
+- auto-restart on bootup unless i stop the container
+- i use port 5001 because 5000 is already dedicated to my Nvidia Riva TTS proxy
+
+```bash
+docker run -d --restart=unless-stopped --gpus all -v $PWD/pretrained_models/persian-tts-female-vits:/kaggle/working -p 5001:5000 -it persian-tts
+```
